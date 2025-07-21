@@ -37,7 +37,7 @@ class AuthRepository {
         .from('profiles')
         .select('id')
         .eq('id', user.id)
-        .single();
-    return response.isNotEmpty;
+        .maybeSingle();
+    return response != null;
   }
 }
