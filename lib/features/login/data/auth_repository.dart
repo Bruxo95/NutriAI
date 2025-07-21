@@ -15,6 +15,7 @@ class AuthRepository {
     final response = await _supabase.auth.signUp(
       email: email,
       password: password,
+      emailRedirectTo: 'io.supabase.flutterquickstart://login-callback/',
     );
     return response.user;
   }
