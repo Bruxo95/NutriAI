@@ -10,92 +10,78 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _authRepository = AuthRepository();
 
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F2F5),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text(
+          'NutriAI',
+          style: TextStyle(
+            color: Color(0xFF666666),
+            fontSize: 32,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Color(0xFF666666)),
+      ),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24.0),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: Container(
-                padding: const EdgeInsets.all(24.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text(
-                      'Crie sua conta',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Comece sua jornada com o NutriAI',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF4B5563),
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    _buildTextField(
-                      controller: _nameController,
-                      labelText: 'Nome',
-                      hintText: 'Seu nome completo',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildTextField(
-                      controller: _emailController,
-                      labelText: 'Email',
-                      hintText: 'seuemail@exemplo.com',
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildTextField(
-                      controller: _passwordController,
-                      labelText: 'Senha',
-                      hintText: '********',
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 24),
-                    _buildSignUpButton(),
-                    const SizedBox(height: 24),
-                    _buildLoginRow(),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 40),
+              const Text(
+                'Cadastre-se',
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: 32,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-            ),
+              const SizedBox(height: 40),
+              _buildTextField(
+                controller: _emailController,
+                labelText: 'Email',
+                hintText: 'seuemail@exemplo.com',
+                keyboardType: TextInputType.emailAddress,
+              ),
+              const SizedBox(height: 20),
+              _buildTextField(
+                controller: _passwordController,
+                labelText: 'Senha',
+                hintText: '**********',
+                obscureText: true,
+              ),
+              const SizedBox(height: 20),
+              _buildTextField(
+                controller: _confirmPasswordController,
+                labelText: 'Confirmar Senha',
+                hintText: '**********',
+                obscureText: true,
+              ),
+              const SizedBox(height: 40),
+              _buildSignUpButton(),
+            ],
           ),
         ),
       ),
@@ -115,9 +101,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Text(
           labelText,
           style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF374151),
+            color: Color(0xFF666666),
+            fontSize: 12,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w400,
           ),
         ),
         const SizedBox(height: 8),
@@ -128,15 +115,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
           decoration: InputDecoration(
             hintText: hintText,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: const BorderSide(color: Color(0xFFD1D5DB)),
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Color(0xFFF1F0E8)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: const BorderSide(color: Color(0xFF4F46E5)),
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Color(0xFF96B6C5)),
             ),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           ),
         ),
       ],
@@ -147,54 +134,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return ElevatedButton(
       onPressed: _signUp,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF4F46E5),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        backgroundColor: const Color(0xFF96B6C5),
+        padding: const EdgeInsets.symmetric(vertical: 13),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       child: const Text(
         'Registrar',
+        textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
           color: Colors.white,
+          fontSize: 20,
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.w900,
         ),
       ),
     );
   }
 
-  Widget _buildLoginRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          'Já tem uma conta?',
-          style: TextStyle(color: Color(0xFF4B5563)),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text(
-            'Faça login',
-            style: TextStyle(
-              color: Color(0xFF4F46E5),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Future<void> _signUp() async {
+    if (_passwordController.text != _confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('As senhas não coincidem'),
+        ),
+      );
+      return;
+    }
     final user = await _authRepository.signUp(
       _emailController.text,
       _passwordController.text,
     );
     if (user != null) {
-      // TODO: Save user name
       Navigator.pushNamedAndRemoveUntil(
         context,
         NavigationOptions.loginRoute,
@@ -203,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Failed to sign up'),
+          content: Text('Falha ao registrar'),
         ),
       );
     }
