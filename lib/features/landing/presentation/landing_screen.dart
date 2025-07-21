@@ -19,7 +19,7 @@ class LandingScreen extends StatelessWidget {
               _buildLogo(),
               const SizedBox(height: 16),
               const Text(
-                'DietApp',
+                'NutriAI',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xFF666666),
@@ -105,7 +105,7 @@ class LandingScreen extends StatelessWidget {
         ),
       ),
       child: const Text(
-        'Log in',
+        'Entrar',
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
@@ -122,7 +122,7 @@ class LandingScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Don’t have an account?',
+          'Não tem uma conta?',
           style: TextStyle(
             color: Color(0xFF666666),
             fontSize: 20,
@@ -136,7 +136,7 @@ class LandingScreen extends StatelessWidget {
             Navigator.pushNamed(context, NavigationOptions.signupRoute);
           },
           child: const Text(
-            'Sign up',
+            'Cadastre-se',
             style: TextStyle(
               color: Color(0xFF96B6C5),
               fontSize: 20,
