@@ -1,4 +1,5 @@
 class NavigationOptions {
+  static const landingRoute = "landing";
   static const loginRoute = "login";
   static const signupRoute = "signup";
   static const mainRoute = "main";
