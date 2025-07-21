@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/features/login/data/auth_repository.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authRepository = AuthRepository();
-  bool _rememberMe = false;
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      'Bem-vindo de volta!',
+                      'Crie sua conta',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 28,
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Faça login na sua conta NutriAI',
+                      'Comece sua jornada com o NutriAI',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -68,6 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 32),
+                    _buildTextField(
+                      controller: _nameController,
+                      labelText: 'Nome',
+                      hintText: 'Seu nome completo',
+                    ),
+                    const SizedBox(height: 16),
                     _buildTextField(
                       controller: _emailController,
                       labelText: 'Email',
@@ -82,11 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       obscureText: true,
                     ),
                     const SizedBox(height: 24),
-                    _buildRememberMeRow(),
+                    _buildSignUpButton(),
                     const SizedBox(height: 24),
-                    _buildLoginButton(),
-                    const SizedBox(height: 24),
-                    _buildSignUpRow(),
+                    _buildLoginRow(),
                   ],
                 ),
               ),
@@ -138,43 +143,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildRememberMeRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Checkbox(
-              value: _rememberMe,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value ?? false;
-                });
-              },
-              activeColor: const Color(0xFF4F46E5),
-            ),
-            const Text(
-              'Lembrar-me',
-              style: TextStyle(color: Color(0xFF374151)),
-            ),
-          ],
-        ),
-        TextButton(
-          onPressed: () {
-            // TODO: Implement forgot password
-          },
-          child: const Text(
-            'Esqueceu a senha?',
-            style: TextStyle(color: Color(0xFF4F46E5)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLoginButton() {
+  Widget _buildSignUpButton() {
     return ElevatedButton(
-      onPressed: _signIn,
+      onPressed: _signUp,
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFF4F46E5),
         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -183,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       child: const Text(
-        'Entrar',
+        'Registrar',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
@@ -193,18 +164,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignUpRow() {
+  Widget _buildLoginRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Não tem uma conta?',
+          'Já tem uma conta?',
           style: TextStyle(color: Color(0xFF4B5563)),
         ),
         TextButton(
-          onPressed: _signUp,
+          onPressed: () {
+            Navigator.pop(context);
+          },
           child: const Text(
-            'Registre-se',
+            'Faça login',
             style: TextStyle(
               color: Color(0xFF4F46E5),
               fontWeight: FontWeight.w600,
@@ -215,23 +188,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _signIn() async {
-    final user = await _authRepository.signIn(
+  Future<void> _signUp() async {
+    final user = await _authRepository.signUp(
       _emailController.text,
       _passwordController.text,
     );
     if (user != null) {
-      Navigator.pushReplacementNamed(context, NavigationOptions.mainRoute);
+      // TODO: Save user name
+      Navigator.pushReplacementNamed(
+          context, NavigationOptions.onboardingRoute);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Failed to sign in'),
+          content: Text('Failed to sign up'),
         ),
       );
     }
-  }
-
-  void _signUp() {
-    Navigator.pushNamed(context, NavigationOptions.signupRoute);
   }
 }
