@@ -195,8 +195,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
     if (user != null) {
       // TODO: Save user name
-      Navigator.pushReplacementNamed(
-          context, NavigationOptions.onboardingRoute);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        NavigationOptions.loginRoute,
+        (route) => false,
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
