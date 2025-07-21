@@ -26,4 +26,17 @@ class AuthRepository {
   User? getCurrentUser() {
     return _supabase.auth.currentUser;
   }
+
+  Future<bool> hasUserProfile() async {
+    final user = getCurrentUser();
+    if (user == null) {
+      return false;
+    }
+    final response = await _supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', user.id)
+        .single();
+    return response.isNotEmpty;
+  }
 }

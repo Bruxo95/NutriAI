@@ -221,7 +221,13 @@ class _LoginScreenState extends State<LoginScreen> {
       _passwordController.text,
     );
     if (user != null) {
-      Navigator.pushReplacementNamed(context, NavigationOptions.mainRoute);
+      final hasProfile = await _authRepository.hasUserProfile();
+      if (hasProfile) {
+        Navigator.pushReplacementNamed(context, NavigationOptions.mainRoute);
+      } else {
+        Navigator.pushReplacementNamed(
+            context, NavigationOptions.onboardingRoute);
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
