@@ -13,7 +13,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authRepository = AuthRepository();
-  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -25,72 +24,79 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F2F5),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text(
+          'NutriAI',
+          style: TextStyle(
+            color: Color(0xFF666666),
+            fontSize: 32,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Color(0xFF666666)),
+      ),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24.0),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: Container(
-                padding: const EdgeInsets.all(24.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text(
-                      'Bem-vindo de volta!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Faça login na sua conta NutriAI',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF4B5563),
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    _buildTextField(
-                      controller: _emailController,
-                      labelText: 'Email',
-                      hintText: 'seuemail@exemplo.com',
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildTextField(
-                      controller: _passwordController,
-                      labelText: 'Senha',
-                      hintText: '********',
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 24),
-                    _buildRememberMeRow(),
-                    const SizedBox(height: 24),
-                    _buildLoginButton(),
-                    const SizedBox(height: 24),
-                    _buildSignUpRow(),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 40),
+              const Text(
+                'Entrar',
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: 32,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-            ),
+              const SizedBox(height: 40),
+              _buildTextField(
+                controller: _emailController,
+                labelText: 'Email',
+                hintText: 'seuemail@exemplo.com',
+                keyboardType: TextInputType.emailAddress,
+              ),
+              const SizedBox(height: 20),
+              _buildTextField(
+                controller: _passwordController,
+                labelText: 'Senha',
+                hintText: '**********',
+                obscureText: true,
+              ),
+              const SizedBox(height: 40),
+              _buildLoginButton(),
+              const SizedBox(height: 24),
+              const Text(
+                'Ou',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: 16,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Entrar com',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: 16,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 24),
+              _buildSocialLoginRow(),
+            ],
           ),
         ),
       ),
@@ -110,9 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
         Text(
           labelText,
           style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF374151),
+            color: Color(0xFF666666),
+            fontSize: 12,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w400,
           ),
         ),
         const SizedBox(height: 8),
@@ -123,49 +130,15 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: InputDecoration(
             hintText: hintText,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: const BorderSide(color: Color(0xFFD1D5DB)),
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Color(0xFFF1F0E8)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: const BorderSide(color: Color(0xFF4F46E5)),
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(color: Color(0xFF96B6C5)),
             ),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRememberMeRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Checkbox(
-              value: _rememberMe,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value ?? false;
-                });
-              },
-              activeColor: const Color(0xFF4F46E5),
-            ),
-            const Text(
-              'Lembrar-me',
-              style: TextStyle(color: Color(0xFF374151)),
-            ),
-          ],
-        ),
-        TextButton(
-          onPressed: () {
-            // TODO: Implement forgot password
-          },
-          child: const Text(
-            'Esqueceu a senha?',
-            style: TextStyle(color: Color(0xFF4F46E5)),
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           ),
         ),
       ],
@@ -176,40 +149,51 @@ class _LoginScreenState extends State<LoginScreen> {
     return ElevatedButton(
       onPressed: _signIn,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF4F46E5),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        backgroundColor: const Color(0xFF96B6C5),
+        padding: const EdgeInsets.symmetric(vertical: 13),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       child: const Text(
         'Entrar',
+        textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
           color: Colors.white,
+          fontSize: 20,
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.w900,
         ),
       ),
     );
   }
 
-  Widget _buildSignUpRow() {
+  Widget _buildSocialLoginRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'Não tem uma conta?',
-          style: TextStyle(color: Color(0xFF4B5563)),
+        IconButton(
+          onPressed: () {
+            // TODO: Implement Google login
+          },
+          icon: Image.asset('assets/images/google_logo.png'), // TODO: Add Google logo
+          iconSize: 40,
         ),
-        TextButton(
-          onPressed: _signUp,
-          child: const Text(
-            'Registre-se',
-            style: TextStyle(
-              color: Color(0xFF4F46E5),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+        const SizedBox(width: 20),
+        IconButton(
+          onPressed: () {
+            // TODO: Implement Facebook login
+          },
+          icon: Image.asset('assets/images/facebook_logo.png'), // TODO: Add Facebook logo
+          iconSize: 40,
+        ),
+        const SizedBox(width: 20),
+        IconButton(
+          onPressed: () {
+            // TODO: Implement Apple login
+          },
+          icon: Image.asset('assets/images/apple_logo.png'), // TODO: Add Apple logo
+          iconSize: 40,
         ),
       ],
     );
@@ -231,13 +215,9 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Failed to sign in'),
+          content: Text('Falha ao entrar'),
         ),
       );
     }
-  }
-
-  void _signUp() {
-    Navigator.pushNamed(context, NavigationOptions.signupRoute);
   }
 }
