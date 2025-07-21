@@ -16,7 +16,7 @@
     </queries>
 
    <application
-        android:label="OpenNutriTracker"
+        android:label="Nutri AI"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

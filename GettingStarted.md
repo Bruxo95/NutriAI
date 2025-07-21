@@ -6,7 +6,7 @@ For setup first you need the following things:
 ## Steps to run App
 1.⁠ ⁠Clone the repository with Git
 
-```git clone https://github.com/simonoppowa/OpenNutriTracker.git```
+```git clone https://github.com/simonoppowa/Nutri AI.git```
 
 2.⁠ ⁠Get Dependencies
 
