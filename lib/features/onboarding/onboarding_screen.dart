@@ -15,6 +15,8 @@ import 'package:opennutritracker/features/onboarding/presentation/widgets/highli
 import 'package:opennutritracker/features/onboarding/presentation/widgets/onboarding_first_page_body.dart';
 import 'package:opennutritracker/features/onboarding/presentation/widgets/onboarding_second_page_body.dart';
 import 'package:opennutritracker/generated/l10n.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:opennutritracker/features/login/data/auth_repository.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -260,15 +262,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     });
   }
 
-  void _onOverviewStartButtonPressed(BuildContext context) {
+  void _onOverviewStartButtonPressed(BuildContext context) async {
     final userEntity = _onboardingBloc.userSelection.toUserEntity();
     final hasAcceptedDataCollection =
         _onboardingBloc.userSelection.acceptDataCollection;
     final usesImperialUnits = _onboardingBloc.userSelection.usesImperialUnits;
     if (userEntity != null) {
-      _onboardingBloc.saveOnboardingData(
-          context, userEntity, hasAcceptedDataCollection, usesImperialUnits);
-      Navigator.pushReplacementNamed(context, NavigationOptions.mainRoute);
+      final currentUser = AuthRepository().getCurrentUser();
+      if (currentUser != null) {
+        try {
+          await Supabase.instance.client.from('profiles').upsert({
+            'id': currentUser.id,
+            'gender': userEntity.gender.index,
+            'birthday': userEntity.birthday.toIso8601String(),
+            'height': userEntity.height,
+            'weight': userEntity.weight,
+            'activity_level': userEntity.activityLevel.index,
+            'goal': userEntity.goal.index,
+            'uses_imperial': usesImperialUnits,
+            'accepted_data_collection': hasAcceptedDataCollection,
+          });
+          _onboardingBloc.saveOnboardingData(
+              context, userEntity, hasAcceptedDataCollection, usesImperialUnits);
+          Navigator.pushReplacementNamed(context, NavigationOptions.mainRoute);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error saving data: ${e.toString()}')));
+        }
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('No user logged in')));
+      }
     } else {
       // Error with user input
       ScaffoldMessenger.of(context).showSnackBar(

@@ -18,6 +18,7 @@ import 'package:opennutritracker/features/activity_detail/activity_detail_screen
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_screen.dart';
 import 'package:opennutritracker/features/add_activity/presentation/add_activity_screen.dart';
 import 'package:opennutritracker/features/edit_meal/presentation/edit_meal_screen.dart';
+import 'package:opennutritracker/features/login/presentation/login_screen.dart';
 import 'package:opennutritracker/features/onboarding/onboarding_screen.dart';
 import 'package:opennutritracker/features/scanner/scanner_screen.dart';
 import 'package:opennutritracker/features/meal_detail/meal_detail_screen.dart';
@@ -25,9 +26,14 @@ import 'package:opennutritracker/features/settings/settings_screen.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: 'https://smkhuylylsxsafwientl.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNta2h1eWx5bHN4c2Fmd2llbnRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMwODE4MTYsImV4cCI6MjA2ODY1NzgxNn0.k1yY2TN5ennZXxlBZR0ls9xdfsTKpvrlCOjyd8fFktU',
+  );
   LoggerConfig.intiLogger();
   await initLocator();
   final isUserInitialized = await locator<UserDataSource>().hasUserData();
@@ -90,10 +96,9 @@ class OpenNutriTrackerApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      initialRoute: userInitialized
-          ? NavigationOptions.mainRoute
-          : NavigationOptions.onboardingRoute,
+      initialRoute: NavigationOptions.loginRoute,
       routes: {
+        NavigationOptions.loginRoute: (context) => const LoginScreen(),
         NavigationOptions.mainRoute: (context) => const MainScreen(),
         NavigationOptions.onboardingRoute: (context) =>
             const OnboardingScreen(),
