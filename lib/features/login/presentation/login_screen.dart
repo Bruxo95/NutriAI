@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacementNamed(context, NavigationOptions.mainRoute);
       } else {
         Navigator.pushReplacementNamed(
-            context, NavigationOptions.onboardingRoute);
+            context, NavigationOptions.welcomeRoute);
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
