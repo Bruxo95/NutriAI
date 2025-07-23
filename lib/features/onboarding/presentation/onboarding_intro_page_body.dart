@@ -22,73 +22,131 @@ class _OnboardingIntroPageBodyState extends State<OnboardingIntroPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: AppConst.getVersionNumber(),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          return Column(
-            children: [
-              AppBannerVersion(
-                versionNumber: snapshot.requireData,
+    return Container(
+      width: 393,
+      height: 852,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Stack(
+        children: [
+          Positioned(
+            left: -533,
+            top: -232,
+            child: Container(
+              width: 1084,
+              height: 1084,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage("https://placehold.co/1084x1084"),
+                  fit: BoxFit.cover,
+                ),
               ),
-              const SizedBox(height: 32.0),
-              Text(S.of(context).appDescription,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: 32.0),
-              Text(
-                S.of(context).onboardingIntroDescription,
-                style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+          Positioned(
+            left: 47,
+            top: 419,
+            child: Text(
+              'Bem-vindo ao NutriAI!',
+              style: TextStyle(
+                color: const Color(0xFF666666),
+                fontSize: 32,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Positioned(
+            left: 36,
+            top: 597,
+            child: SizedBox(
+              width: 320,
+              child: Text(
+                'Para oferecer nosso melhor serviço, precisamos de mais informações suas.',
                 textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16.0),
-              ListTile(
-                onTap: () => _togglePolicy(),
-                title: Text.rich(
-                    textAlign: TextAlign.center,
-                    TextSpan(
-                        text: S.of(context).readLabel,
-                        style: Theme.of(context).textTheme.bodySmall,
-                        children: [
-                          TextSpan(
-                              text: ' ${S.of(context).privacyPolicyLabel}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      decoration: TextDecoration.underline),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  _launchUrl();
-                                }),
-                        ])),
-                leading: Checkbox(
-                  value: _acceptedPolicy,
-                  onChanged: (value) {
-                    if (value != null) {
-                      _togglePolicy();
-                    }
-                  },
+                style: TextStyle(
+                  color: const Color(0xFF666666),
+                  fontSize: 20,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              ListTile(
-                onTap: () => _toggleDataCollection(),
-                title: Text(S.of(context).dataCollectionLabel,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall),
-                leading: Checkbox(
-                  value: _acceptedDataCollection,
-                  onChanged: (value) => _toggleDataCollection(),
+            ),
+          ),
+          Positioned(
+            left: 121,
+            top: 129,
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: ShapeDecoration(
+                color: const Color(0xFFF1F0E8),
+                shape: OvalBorder(
+                  side: BorderSide(
+                    width: 4,
+                    strokeAlign: BorderSide.strokeAlignCenter,
+                    color: const Color(0xFF96B6C5),
+                  ),
                 ),
-              )
-            ],
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+              ),
+            ),
+          ),
+          Positioned(
+            left: 122,
+            top: 279,
+            child: SizedBox(
+              width: 149,
+              child: Text(
+                'NutriAI',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: const Color(0xFF666666),
+                  fontSize: 32,
+                  fontFamily: 'Saira',
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: -2.56,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 166,
+            top: 154,
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: OvalBorder(
+                  side: BorderSide(
+                    width: 4,
+                    strokeAlign: BorderSide.strokeAlignCenter,
+                    color: const Color(0xFFCCE6F1),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 211,
+            top: 179,
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: OvalBorder(
+                  side: BorderSide(
+                    width: 4,
+                    strokeAlign: BorderSide.strokeAlignCenter,
+                    color: const Color(0xFFEEE0C9),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
