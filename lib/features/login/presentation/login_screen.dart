@@ -72,30 +72,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 40),
               _buildLoginButton(),
-              const SizedBox(height: 24),
-              const Text(
-                'Ou',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFF666666),
-                  fontSize: 16,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Entrar com',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFF666666),
-                  fontSize: 16,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 24),
-              _buildSocialLoginRow(),
             ],
           ),
         ),
@@ -165,37 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
           fontWeight: FontWeight.w900,
         ),
       ),
-    );
-  }
-
-  Widget _buildSocialLoginRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          onPressed: () {
-            // TODO: Implement Google login
-          },
-          icon: Image.asset('assets/images/google_logo.png'), // TODO: Add Google logo
-          iconSize: 40,
-        ),
-        const SizedBox(width: 20),
-        IconButton(
-          onPressed: () {
-            // TODO: Implement Facebook login
-          },
-          icon: Image.asset('assets/images/facebook_logo.png'), // TODO: Add Facebook logo
-          iconSize: 40,
-        ),
-        const SizedBox(width: 20),
-        IconButton(
-          onPressed: () {
-            // TODO: Implement Apple login
-          },
-          icon: Image.asset('assets/images/apple_logo.png'), // TODO: Add Apple logo
-          iconSize: 40,
-        ),
-      ],
     );
   }
 
