@@ -121,13 +121,16 @@ class LandingScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'Não tem uma conta?',
-          style: TextStyle(
-            color: Color(0xFF666666),
-            fontSize: 20,
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.w400,
+        const Flexible(
+          child: Text(
+            'Não tem uma conta?',
+            style: TextStyle(
+              color: Color(0xFF666666),
+              fontSize: 20,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w400,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         const SizedBox(width: 8),
